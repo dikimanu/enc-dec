@@ -1,3 +1,5 @@
+#python -m uvicorn app.main:app --reload
+
 from fastapi import FastAPI, Request, UploadFile, File, Form
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates

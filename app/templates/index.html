@@ -19,16 +19,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 10px;
         }
+
         /* Container Card */
         .container {
             background: #fff;
-            padding: 40px;
+            padding: 30px;
             max-width: 700px;
             width: 100%;
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
             text-align: center;
             transition: transform 0.3s ease;
         }
@@ -38,8 +39,10 @@
         h2 {
             font-weight: 700;
             color: #333;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
         }
+
         /* Form Styles */
         form {
             display: flex;
@@ -54,39 +57,40 @@
             width: 100%;
         }
         button {
-            padding: 12px 25px;
-            margin: 10px;
+            padding: 12px 20px;
+            margin: 8px;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        button[type="submit"][value="encrypt"] {
+        button[value="encrypt"] {
             background: #667eea;
             color: #fff;
         }
-        button[type="submit"][value="encrypt"]:hover {
+        button[value="encrypt"]:hover {
             background: #5a67d8;
         }
-        button[type="submit"][value="decrypt"] {
+        button[value="decrypt"] {
             background: #764ba2;
             color: #fff;
         }
-        button[type="submit"][value="decrypt"]:hover {
+        button[value="decrypt"]:hover {
             background: #6b3ca0;
         }
+
         /* Results Section */
         .results {
-            margin-top: 30px;
+            margin-top: 20px;
             background: #f9f9f9;
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
             text-align: left;
         }
         .results h3 {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: 600;
             color: #444;
         }
@@ -94,8 +98,9 @@
             list-style: none;
         }
         .results li {
-            padding: 8px 0;
+            padding: 6px 0;
             border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
         }
         .results a {
             color: #667eea;
@@ -110,16 +115,73 @@
             font-weight: 500;
         }
 
+        /* Loading Overlay */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Responsive */
-        @media(max-width: 500px){
+        @media(max-width: 580px){
             .container {
-                padding: 25px;
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.3rem;
             }
             input[type=file] {
-                font-size: 14px;
+                font-size: 0.9rem;
             }
             button {
                 width: 100%;
+                margin: 6px 0;
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            .results li {
+                font-size: 0.85rem;
+            }
+        }
+        @media(max-width: 300px){
+            h2 {
+                font-size: 1.1rem;
+            }
+            input[type=file] {
+                font-size: 0.8rem;
+            }
+            button {
+                font-size: 0.8rem;
+                padding: 8px;
+            }
+            .results li {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -127,6 +189,12 @@
 <body>
 <div class="container">
     <h2>🔐 File Encryption & Decryption</h2>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Processing files, please wait...</p>
+    </div>
 
     <form method="post" enctype="multipart/form-data">
         <label>Select Files</label><br>
@@ -154,5 +222,14 @@
         </div>
     {% endif %}
 </div>
+
+<script>
+const loadingOverlay = document.getElementById("loading-overlay");
+const form = document.querySelector("form");
+
+form.addEventListener("submit", () => {
+    loadingOverlay.style.display = "flex";
+});
+</script>
 </body>
 </html>
